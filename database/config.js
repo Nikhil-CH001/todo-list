@@ -1,5 +1,5 @@
 const dotenv = require("dotenv")
-const { Sequelize } = require("sequelize")
+const { Sequelize, DataTypes } = require("sequelize")
 dotenv.config()
 
 const sequelize = new Sequelize({
@@ -11,6 +11,10 @@ const sequelize = new Sequelize({
     dialect : "mysql"
 })
 
+const db = {}
+db.todos = require("./../models/todoModel")(sequelize,DataTypes)
+db.users = require("./../models/userModel")(sequelize,DataTypes)
+
 sequelize.authenticate()
     .then(()=>{
         console.log("Database connected")
@@ -20,3 +24,6 @@ sequelize.authenticate()
     })
 sequelize.sync({alter : true})
 console.log("Tables are created")
+
+module.exports = sequelize
+module.exports = db

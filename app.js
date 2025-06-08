@@ -1,10 +1,11 @@
 const express = require("express")
-const path = require("path");
+const db = require("./database/config")
+const bcrypt = require("bcrypt")
 
 const app = express()
 
 app.set("view engine", "ejs")
-app.set("views", path.join(__dirname, "views")); // or wherever your .ejs files are
+app.use(express.urlencoded({extended: true}))
 
 
 app.get("/", (req,res)=>{
@@ -21,6 +22,27 @@ app.get("/register", (req,res)=>{
 })
 app.get("/login", (req,res)=>{
     res.render("authentication/login")
+})
+
+app.post("/add", async(req,res)=>{
+    const {title, description, date, status} = req.body
+    await db.todos.create({
+        title : title,
+        description : description,
+        date : date
+    })
+    res.redirect("/")
+    
+})
+
+app.post("/register", async(req,res)=>{
+    const {username, email, password, confirm_password} = req.body
+    await db.users.create({
+        username : username,
+        email : email,
+        password : bcrypt.hashSync(password,10)
+    })
+    res.redirect("/add")    
 })
 
 app.listen(3000, ()=>{
