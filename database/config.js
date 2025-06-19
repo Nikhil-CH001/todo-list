@@ -15,6 +15,9 @@ const db = {}
 db.todos = require("./../models/todoModel")(sequelize,DataTypes)
 db.users = require("./../models/userModel")(sequelize,DataTypes)
 
+db.users.hasMany(db.todos)
+db.todos.belongsTo(db.users)
+
 sequelize.authenticate()
     .then(()=>{
         console.log("Database connected")

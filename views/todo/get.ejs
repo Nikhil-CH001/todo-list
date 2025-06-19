@@ -2,41 +2,35 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>To-Do List</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
-<body class="w-full min-h-screen bg-gray-50">
+<body>
   <%- include("../partials/nav") %>
+    <div class="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden mt-16">
+      <div class="px-4 py-2">
+        <h1 class="text-gray-800 font-bold text-2xl uppercase">To-Do List</h1>
+      </div>
+      <ul class="divide-y divide-gray-200 px-4">
+        <% datas.forEach(function(data){ %>
 
-  <div class="flex items-center justify-center min-h-[calc(100vh-4rem)] px-4">
-    <section class="w-full max-w-md bg-white rounded-lg shadow-lg p-6 mt-10">
-      <header class="mb-4 text-center">
-        <h1 class="text-2xl font-bold text-gray-800 uppercase">To-Do List</h1>
-      </header>
-
-      <ul class="divide-y divide-gray-200">
-        <% if (datas.length === 0) { %>
-          <li class="py-4 text-center text-gray-500">No tasks available.</li>
-        <% } else { %>
-          <% datas.forEach(function(data) { %>
-            <li class="py-4">
-              <div class="flex items-start gap-3">
-                <input id="todo-<%= data._id %>" name="todo-<%= data._id %>" type="checkbox"
-                  class="mt-1 h-4 w-4 text-teal-600 border-gray-300 rounded focus:ring-teal-500">
-                <label for="todo-<%= data._id %>" class="flex flex-col text-gray-900">
-                  <span class="text-lg font-medium"><%= data.title %></span>
-                  <span class="text-sm text-gray-500"><%= data.date %></span>
-                </label>
-              </div>
-            </li>
+          <li class="py-4">
+            <div class="flex items-center">
+              <label for="todo3" class="ml-3 block text-gray-900">
+                <span class="text-lg font-medium"><%- data.title %></span>
+                <span class="text-sm font-light text-black"> <%- data.date %></span>
+                <span class="text-sm font-light text-black"> <%- data.status %></span>
+              </label>
+            </div>
+            <a href="/delete/<%- data.id %>"> <button>Delete me</button> </a> <br>
+            <a href="/edit/<%- data.id %>"> <button>Edit me</button> </a>
+          </li>
           <% }) %>
-        <% } %>
       </ul>
-    </section>
-  </div>
+    </div>
 </body>
 
 </html>
